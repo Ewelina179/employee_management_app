@@ -5,10 +5,11 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
+from django.views.generic.list import ListView
 
-def index(request):
-    employees = Employee.objects.all()
-    return render(request, 'employee/list_of_employees.html', {'employees': employees})
+class EmployeeListView(ListView):
+    model = Employee
+    template_name = 'employee/list_of_employees.html'
 
 class EmployeeView(DetailView):
     model = Employee
