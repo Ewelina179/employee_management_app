@@ -8,16 +8,15 @@ class EmployeeForm(ModelForm):
         fields = ['first_name', 'last_name', 'age', 'profession', 'avatar']
 
 FILE_FORMAT = (
-    ("json", "json"),
+    ("pdf", "pdf"),
     ("csv", "csv")
 )
 
-unique_profession_of_employees = Employee.objects.distinct("profession").all()
-professions = unique_profession_of_employees.values("profession")
-
-class GetReportForm(forms.Form):
-    # dwa choices - z modelu profession, z wyborów na sztywno format pliku
-    profession = forms.ModelChoiceField(queryset=professions)
+class GetReportForm(ModelForm):
     file_format = forms.ChoiceField(choices = FILE_FORMAT)
+
+    class Meta:
+        model = Employee
+        fields = ['profession']
 
 
