@@ -12,5 +12,5 @@ urlpatterns = [
     path('<pk>/delete/', DeleteEmployeeView.as_view()),
     path('report/', ReportView.as_view()),
     path('delete/', DeleteView.as_view()),
-    path('csv/',views.getfile)  
+    path('csv/',views.getfile, name='report')  
 ]
