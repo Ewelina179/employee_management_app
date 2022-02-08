@@ -1,10 +1,22 @@
-Tu będzie generato raportów.
+{% extends 'base.html' %}
 
-<form method="POST" enctype="multipart/form-data">
-  
-    {% csrf_token %}
-  
-    {{ form.as_p }}
-      
-    <input type="submit" value="Submit">
-</form>
+{% block content %}
+
+<table class="table">
+    <thead>
+      <tr>
+        <th>Zawód</th>
+        <th>Średnia wieku</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for el in avg %}
+      <tr class="active">
+        <td>{{el.profession}}</td>
+        <td>{{el.age__avg}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

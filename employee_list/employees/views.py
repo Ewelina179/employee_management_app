@@ -8,6 +8,7 @@ from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.list import ListView
+from django.db.models import Avg
 
 class EmployeeListView(ListView):
     model = Employee
@@ -41,25 +42,10 @@ class DeleteEmployeeView(DeleteView):
 
 class ReportView(View):
     def get(self, request):
-        form = GetReportForm()
+        avg = Employee.objects.all().values('profession').annotate(Avg('age'))
+        print(avg)
         context = {
-            'form':form,
-        }
-        return render(request, "employee/report.html", context)
-
-    def post(self, request):
-        form = GetReportForm(request.POST)
-        if form.is_valid():
-            obj = form.cleaned_data
-            x = obj['profession']
-            counter = Employee.objects.filter(profession=x).all()
-            age = [x.age for x in counter]
-            average = (sum(age)/len(age))
-            print(average)
-            return HttpResponse("jest dobrze!")
-        else:
-            context = {
-            'form':form,
+            "avg": avg        
         }
         return render(request, "employee/report.html", context)
 
