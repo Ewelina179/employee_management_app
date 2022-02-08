@@ -1,3 +1,4 @@
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from .models import Employee
 from .forms import GetReportForm
@@ -40,25 +41,29 @@ class DeleteEmployeeView(DeleteView):
 
 class ReportView(View):
     def get(self, request):
-        form = GetReportForm(request.POST)
+        form = GetReportForm()
         context = {
             'form':form,
         }
         return render(request, "employee/report.html", context)
 
     def post(self, request):
-        form = GetReportForm()
+        form = GetReportForm(request.POST)
         if form.is_valid():
-            form.save()
-            # logika formularza
-            return redirect("employee_list_view", request.user.userprofile)
+            obj = form.cleaned_data
+            x = obj['profession']
+            counter = Employee.objects.filter(profession=x).all()
+            age = [x.age for x in counter]
+            average = (sum(age)/len(age))
+            print(average)
+            return HttpResponse("jest dobrze!")
         else:
             context = {
             'form':form,
         }
-        return render(request, "empployee/report.html", context)
+        return render(request, "employee/report.html", context)
 
 class DeleteEmployeeView(View):
-    def post(Self, request):
+    def post(self, request):
         pass
-        return render(request, "users/dashboard.html")
+        return render(request)
