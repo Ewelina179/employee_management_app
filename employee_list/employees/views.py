@@ -9,6 +9,7 @@ from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.list import ListView
 from django.db.models import Avg
+import csv
 
 class EmployeeListView(ListView):
     model = Employee
@@ -43,12 +44,21 @@ class DeleteEmployeeView(DeleteView):
 class ReportView(View):
     def get(self, request):
         avg = Employee.objects.all().values('profession').annotate(Avg('age'))
-        print(avg)
         context = {
             "avg": avg        
         }
         return render(request, "employee/report.html", context)
 
+def getfile(request):  
+    response = HttpResponse(content_type='text/csv')  
+    response['Content-Disposition'] = 'attachment; filename="raport.csv"'  
+    avg = Employee.objects.all().values('profession').annotate(Avg('age'))  
+    writer = csv.writer(response)  
+    for element in avg:  
+        print(element)
+        writer.writerow([element['profession'],element['age__avg']])
+    return response
+    
 class DeleteEmployeeView(View):
     def post(self, request):
         pass
