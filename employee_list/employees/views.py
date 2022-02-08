@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Employee
+from .forms import GetReportForm
 from django.views import View
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
@@ -36,3 +37,28 @@ class DeleteEmployeeView(DeleteView):
     success_url ="/"
 
     template_name = "employee/employee_delete.html"
+
+class ReportView(View):
+    def get(self, request):
+        form = GetReportForm(request.POST)
+        context = {
+            'form':form,
+        }
+        return render(request, "employee/report.html", context)
+
+    def post(self, request):
+        form = GetReportForm()
+        if form.is_valid():
+            form.save()
+            # logika formularza
+            return redirect("employee_list_view", request.user.userprofile)
+        else:
+            context = {
+            'form':form,
+        }
+        return render(request, "empployee/report.html", context)
+
+class DeleteEmployeeView(View):
+    def post(Self, request):
+        pass
+        return render(request, "users/dashboard.html")
