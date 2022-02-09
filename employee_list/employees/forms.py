@@ -7,16 +7,5 @@ class EmployeeForm(ModelForm):
         model = Employee
         fields = ['first_name', 'last_name', 'age', 'profession', 'avatar']
 
-FILE_FORMAT = (
-    ("pdf", "pdf"),
-    ("csv", "csv")
-)
-
-class GetReportForm(ModelForm):
-    file_format = forms.ChoiceField(choices = FILE_FORMAT)
-
-    class Meta:
-        model = Employee
-        fields = ['profession']
 
 
