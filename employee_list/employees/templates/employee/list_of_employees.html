@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<p>Hej</p>
+<p> Lista pracowników</p>
+
 <ol>
 {% for employee in employees %}
     <li>{{employee.first_name}}</li>
-    <p> jakoś sensownie wylistować </p>
+    <a href="{% url 'details' employee.pk %}">Coś</a>
+    <p> button do ajaxa </p>
 {% endfor %}
 </ol>
 {% endblock %}
