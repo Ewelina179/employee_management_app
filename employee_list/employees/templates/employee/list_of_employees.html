@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<a href="{% url 'url_for_report' %}">Raport nt. średniej wieku wg zawodów</a>
+<br>
 <p> Lista pracowników</p>
 
 <ol>
 {% for employee in employees %}
     <li>{{employee.first_name}}</li>
-    <a href="{% url 'details' employee.pk %}">Coś</a>
+    <a href="{% url 'details' employee.pk %}">Dane</a>
     <p> button do ajaxa </p>
 {% endfor %}
 </ol>
