@@ -58,7 +58,7 @@ def getfile(request):
         writer.writerow([element['profession'],element['age__avg']])
     return response
 
-class Delete_Async_View(View):
+class Delete_View(View):
     def post(self, request):
         pass
         return render(request)
