@@ -1,7 +1,6 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from .models import Employee
-from .forms import GetReportForm
 from django.views import View
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
@@ -13,6 +12,7 @@ import csv
 
 class EmployeeListView(ListView):
     model = Employee
+    context_object_name = 'employees'
     template_name = 'employee/list_of_employees.html'
 
 class EmployeeView(DetailView):
@@ -54,12 +54,11 @@ def getfile(request):
     response['Content-Disposition'] = 'attachment; filename="raport.csv"'  
     avg = Employee.objects.all().values('profession').annotate(Avg('age'))  
     writer = csv.writer(response)  
-    for element in avg:  
-        print(element)
+    for element in avg:
         writer.writerow([element['profession'],element['age__avg']])
     return response
-    
-class DeleteEmployeeView(View):
+
+class Delete_Async_View(View):
     def post(self, request):
         pass
         return render(request)
