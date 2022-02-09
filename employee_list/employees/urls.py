@@ -6,10 +6,10 @@ from .views import EmployeeListView, EmployeeView, CreateEmployeeView, UpdateEmp
 
 urlpatterns = [
     path('', EmployeeListView.as_view(), name='epmloyee_list_view'),
-    path('<pk>/details/', EmployeeView.as_view()),
-    path('create/', CreateEmployeeView.as_view()),
-    path('<pk>/edit/', UpdateEmployeeView.as_view()),
-    path('<pk>/delete/', DeleteEmployeeView.as_view()),
+    path('<pk>/details/', EmployeeView.as_view(), name='details'),
+    path('create/', CreateEmployeeView.as_view(), name='create'),
+    path('<pk>/edit/', UpdateEmployeeView.as_view(), name='update'),
+    path('<pk>/delete/', DeleteEmployeeView.as_view(), name='delete'),
     path('report/', ReportView.as_view()),
     path('delete/', DeleteView.as_view()),
     path('csv/',views.getfile, name='report')  
