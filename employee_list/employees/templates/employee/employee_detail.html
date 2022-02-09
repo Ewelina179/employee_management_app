@@ -1,1 +1,18 @@
 Tu ma wyświetlać detale i być łącznikiem z edycją i usunięciem (ale usunąć można też z poziomu listy pracowników buttonem z ajaxem)
+{% extends 'base.html' %}
+
+{% block content %}
+<p> Dane nt. pracownika </p>
+
+<ol>
+    <li>{{employee.first_name}}</li>
+    <li>{{employee.last_name}}</li>
+    <li>{{employee.age}}</li>
+    <li>{{employee.profession}}</li>
+    <a href="{% url 'update' employee.pk %}">Edytuj dane</a>
+    <form action="{% url 'delete' employee.pk %}">
+        <button type="submit">Usuń pracownika</button>
+     </form>    
+ZDJĘCIE!
+</ol>
+{% endblock %}
