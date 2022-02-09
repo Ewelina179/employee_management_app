@@ -17,6 +17,7 @@ class EmployeeListView(ListView):
 
 class EmployeeView(DetailView):
     model = Employee
+    context_object_name = 'employee'
     template_name = "employee/employee_detail.html"
 
 class CreateEmployeeView(CreateView):
