@@ -10,12 +10,14 @@
       </tr>
     </thead>
     <tbody>
-        {% for el in avg %}
       <tr class="active">
-        <td>{{el.profession}}</td>
-        <td>{{el.age__avg}}</td>
+        {% for x, y in avg_and_profession_name %}
+        <td>{{y}}</td>
+        <td>{{x.age__avg}}</td>
+
       </tr>
       {% endfor %}
+
     </tbody>
   </table>
 

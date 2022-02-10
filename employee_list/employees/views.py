@@ -10,6 +10,7 @@ from django.views.generic.edit import DeleteView
 from django.views.generic.list import ListView
 from django.db.models import Avg
 import csv
+from django.db.models import Subquery
 
 class EmployeeListView(ListView):
     model = Employee
@@ -47,9 +48,13 @@ class DeleteEmployeeView(DeleteView):
 
 class ReportView(View):
     def get(self, request):
-        avg = Employee.objects.all().values('profession').annotate(Avg('age'))
+        avg = Employee.objects.all().values('profession').annotate(Avg('age')).order_by('profession_id')
+        a = Profession.objects.filter(id__in=Subquery(avg.values('profession'))).all().order_by('id')
+        lst=[list(avg), list(a)]
+        avg_and_profession_name=zip(*lst)
         context = {
-            "avg": avg        
+            "avg_and_profession_name": avg_and_profession_name
+
         }
         return render(request, "employee/report.html", context)
 
