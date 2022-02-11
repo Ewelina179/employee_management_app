@@ -14,7 +14,6 @@ from django.db.models import Subquery
 
 class EmployeeListView(ListView):
     model = Employee
-    #context_object_name = 'employees'
     template_name = 'employee/list_of_employees.html'
     paginate_by = 10
 
@@ -80,6 +79,13 @@ class DeleteEmployeeAjaxView(View):
             response={"message": "deleted"}
             return JsonResponse(response)
         return JsonResponse({"message": "something wrong"})
+
+
+class ProfessionListView(ListView):
+    model = Profession
+    template_name = 'profession/list_of_professions.html'
+    paginate_by = 10
+
 
 class CreateProfessionView(CreateView):
     model = Profession
