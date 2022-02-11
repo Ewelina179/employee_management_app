@@ -18,3 +18,4 @@ urlpatterns = [
     path('<pk>/editprofession/', UpdateProfessionView.as_view(), name='update_profession') ,
     path('<pk>/deleteprofession/', DeleteProfessionView.as_view(), name='delete_profession')
 ]
+urlpatterns += static(MEDIA_URL,document_root=MEDIA_ROOT)

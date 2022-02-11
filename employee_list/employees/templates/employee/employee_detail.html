@@ -9,6 +9,7 @@ Tu ma wyświetlać detale i być łącznikiem z edycją i usunięciem (ale usun�
     <li>{{employee.last_name}}</li>
     <li>{{employee.age}}</li>
     <li>{{employee.profession}}</li>
+    <img src="{{ employee.avatar.url}}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
     <a href="{% url 'update' employee.pk %}">Edytuj dane</a>
     <form action="{% url 'delete' employee.pk %}">
         <button type="submit">Usuń pracownika</button>
