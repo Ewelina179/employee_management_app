@@ -106,6 +106,6 @@ class UpdateProfessionView(UpdateView):
 
 class DeleteProfessionView(DeleteView):
 
-    model = Employee
+    model = Profession
     success_url ="/"
     template_name = "employee/employee_delete.html"
