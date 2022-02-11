@@ -9,6 +9,9 @@
 <ol>
 {% for employee in page_obj %}
     <li>{{employee.first_name}}</li>
+    {{employee.last_name}}
+    <br>
+    {{employee.profession.name}}
     <a href="{% url 'details' employee.pk %}">Dane</a>
     <a href="{% url 'delete_employee_ajax' employee.id %}" class="link-delete text-danger">Usuń</a>
 {% endfor %}
