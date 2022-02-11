@@ -13,41 +13,41 @@ import csv
 from django.db.models import Subquery
 
 class EmployeeListView(ListView):
+
     model = Employee
     template_name = 'employee/list_of_employees.html'
     paginate_by = 10
     ordering = ['last_name']
 
 class EmployeeView(DetailView):
+
     model = Employee
     context_object_name = 'employee'
     template_name = "employee/employee_detail.html"
 
 class CreateEmployeeView(CreateView):
+
     model = Employee
-
     form_class = EmployeeForm
-    
     success_url ="/"
-
     template_name = "employee/employee_create_form.html"
     
 class UpdateEmployeeView(UpdateView):
+
     model = Employee
-    
     fields = ['first_name', 'last_name', 'age', 'profession', 'avatar']
     success_url ="/"
-
     template_name = "employee/employee_update_form.html"
 
 class DeleteEmployeeView(DeleteView):
+
     model = Employee
     success_url ="/"
-
     template_name = "employee/employee_delete.html"
 
 
 class ReportView(View):
+
     def get(self, request):
         avg = Employee.objects.all().values('profession').annotate(Avg('age')).order_by('profession_id')
         a = Profession.objects.filter(id__in=Subquery(avg.values('profession'))).all().order_by('id')
@@ -59,15 +59,19 @@ class ReportView(View):
         }
         return render(request, "employee/report.html", context)
 
+class ReportFileView(View):
 
-def getfile(request):  
-    response = HttpResponse(content_type='text/csv')  
-    response['Content-Disposition'] = 'attachment; filename="raport.csv"'  
-    avg = Employee.objects.all().values('profession').annotate(Avg('age'))  
-    writer = csv.writer(response)  
-    for element in avg:
-        writer.writerow([element['profession'],element['age__avg']])
-    return response
+    def get(self, request):
+        response = HttpResponse(content_type='text/csv')  
+        response['Content-Disposition'] = 'attachment; filename="raport.csv"'  
+        avg = Employee.objects.all().values('profession').annotate(Avg('age')).order_by('profession_id')
+        profession_name = Profession.objects.filter(id__in=Subquery(avg.values('profession'))).all().order_by('id')
+        lst=[list(avg), list(profession_name)]
+        avg_and_profession_name=zip(*lst)
+        writer = csv.writer(response)  
+        for element in avg_and_profession_name:
+            writer.writerow([element[0]['age__avg'],element[1]])
+        return response
 
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
