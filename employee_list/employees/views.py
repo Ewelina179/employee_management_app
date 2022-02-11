@@ -1,4 +1,4 @@
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from .forms import EmployeeForm
 from .models import Employee, Profession
@@ -68,10 +68,17 @@ def getfile(request):
         writer.writerow([element['profession'],element['age__avg']])
     return response
 
-class Delete_View(View):
-    def post(self, request):
-        pass
-        return render(request)
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
+class DeleteEmployeeAjaxView(View):
+    def get(self,request,pk):
+        employee_to_delete = Employee.objects.get(id=pk)
+        if is_ajax(request=request):
+            employee_to_delete.delete()
+            response={"message": "deleted"}
+            return JsonResponse(response)
+        return JsonResponse({"message": "something wrong"})
 
 class CreateProfessionView(CreateView):
     model = Profession
