@@ -12,8 +12,10 @@
     {{employee.last_name}}
     <br>
     {{employee.profession.name}}
-    <a href="{% url 'details' employee.pk %}">Dane</a>
-    <a href="{% url 'delete_employee_ajax' employee.id %}" class="link-delete text-danger">Usuń</a>
+    <br>
+    <a href="{% url 'details' employee.pk %}">Dane pracownika</a>
+    <br>
+    <a href="{% url 'delete_employee_ajax' employee.id %}" class="link-delete text-danger">Usuń pracownika</a>
 {% endfor %}
 </ol>
 
