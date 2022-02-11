@@ -16,6 +16,7 @@ class EmployeeListView(ListView):
     model = Employee
     template_name = 'employee/list_of_employees.html'
     paginate_by = 10
+    ordering = ['last_name']
 
 class EmployeeView(DetailView):
     model = Employee
@@ -82,29 +83,29 @@ class DeleteEmployeeAjaxView(View):
 
 
 class ProfessionListView(ListView):
+
     model = Profession
     template_name = 'profession/list_of_professions.html'
     paginate_by = 10
+    ordering = ['name']
 
 
 class CreateProfessionView(CreateView):
-    model = Profession
 
+    model = Profession
     fields = ['name']
     success_url ="/"
-
     template_name = "profession/profession_create.html"
     
 class UpdateProfessionView(UpdateView):
+
     model = Profession
-    
     fields = ['name']
     success_url ="/"
-
     template_name = "profession/profession_update.html"
 
 class DeleteProfessionView(DeleteView):
+
     model = Employee
     success_url ="/"
-
     template_name = "employee/employee_delete.html"
