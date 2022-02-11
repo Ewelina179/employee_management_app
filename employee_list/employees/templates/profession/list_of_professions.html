@@ -7,8 +7,17 @@
 <ol>
 {% for profession in page_obj %}
     <li>{{profession.name}}</li>
+    <a href="{% url 'update_profession' profession.pk %}">Edytuj dane</a>
+    <form action="{% url 'delete_profession' profession.pk %}">
+        <button type="submit">Usuń zawód</button>
+     </form>    
 {% endfor %}
 </ol>
+
+<form action="{% url 'create_profession' %}">
+    <button type="submit">Dodaj zawód</button>
+ </form>    
+
 
 <div class="pagination">
     <span class="step-links">
