@@ -14,8 +14,9 @@ from django.db.models import Subquery
 
 class EmployeeListView(ListView):
     model = Employee
-    context_object_name = 'employees'
+    #context_object_name = 'employees'
     template_name = 'employee/list_of_employees.html'
+    paginate_by = 10
 
 class EmployeeView(DetailView):
     model = Employee
