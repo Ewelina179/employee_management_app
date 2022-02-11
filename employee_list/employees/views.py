@@ -11,6 +11,7 @@ from django.views.generic.list import ListView
 from django.db.models import Avg
 import csv
 from django.db.models import Subquery
+from django.db.models import ProtectedError
 
 class EmployeeListView(ListView):
 
@@ -113,3 +114,9 @@ class DeleteProfessionView(DeleteView):
     model = Profession
     success_url ="/"
     template_name = "employee/employee_delete.html"
+
+    def post(self, request, *args, **kwargs):
+        try:
+            return self.delete(request, *args, **kwargs)
+        except ProtectedError:
+            return HttpResponse("Nie można usunąć zawodu, bo ma przypisanego pracownika.")
