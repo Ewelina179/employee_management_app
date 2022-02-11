@@ -10,7 +10,43 @@
 {% for employee in employees %}
     <li>{{employee.first_name}}</li>
     <a href="{% url 'details' employee.pk %}">Dane</a>
-    <p> button do ajaxa </p>
+    <a href="{% url 'delete_employee_ajax' employee.id %}" class="link-delete text-danger">Usuń</a>
 {% endfor %}
 </ol>
+
+
+<script > 
+$(".link-delete").on("click", function(e){
+    e.preventDefault();
+    var $this = $(this);
+    if (confirm("Czy chcesz usunąć pracownika?")){
+        $.ajax({
+            url: $this.attr("href"),
+            type: "GET",
+            dataType: "json",
+            success: function(resp){
+                if(resp.message === 'deleted'){
+                    $this.parents('.record').fadeOut("slow", function(){
+                        $this.parents('.record').remove();
+                    });
+                    
+                }
+                else{
+                    alert(resp.message);
+                }
+            },
+            error: function(resp){
+                console.log("Coś jest nie tak")
+            }
+
+        });
+    }
+    return false;
+}
+)
+</script>
+
+
+
+
 {% endblock %}
