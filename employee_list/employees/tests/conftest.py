@@ -2,6 +2,7 @@ import pytest
 
 from employees.models import Employee
 
+
 @pytest.fixture(scope='session')
 def employee_first(django_db_setup, django_db_blocker):
     with django_db_blocker.unblock():

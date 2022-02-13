@@ -1,7 +1,10 @@
 from random import choice
-from django.forms import ModelForm, SelectMultiple
+
 from django import forms
+from django.forms import ModelForm, SelectMultiple
+
 from .models import Employee, Profession
+
 
 class EmployeeForm(ModelForm):
     

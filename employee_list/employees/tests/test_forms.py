@@ -1,7 +1,8 @@
 import pytest
 
-from employees.models import Employee
 from employees.forms import EmployeeForm
+from employees.models import Employee
+
 
 def test_employee_form_valid():
     form_data = {

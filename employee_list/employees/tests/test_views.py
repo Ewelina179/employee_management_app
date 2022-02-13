@@ -1,7 +1,7 @@
 import pytest
+from django.urls import reverse
 from pytest_django.asserts import assertTemplateUsed
 
-from django.urls import reverse
 
 def test_employee_list_view(client, db):
     response = client.get("/")

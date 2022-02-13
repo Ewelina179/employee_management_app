@@ -1,17 +1,16 @@
+import csv
+
+from django.db.models import Avg, ProtectedError, Subquery
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render, redirect
-from .forms import EmployeeForm
-from .models import Employee, Profession
+from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
-from django.views.generic.edit import UpdateView
-from django.views.generic.edit import DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
-from django.db.models import Avg
-import csv
-from django.db.models import Subquery
-from django.db.models import ProtectedError
+
+from .forms import EmployeeForm
+from .models import Employee, Profession
+
 
 class EmployeeListView(ListView):
 

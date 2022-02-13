@@ -1,8 +1,15 @@
-from django.urls import path
-from . import views
-from employee_list.settings.base import DEBUG, STATIC_URL, STATIC_ROOT, MEDIA_URL, MEDIA_ROOT
 from django.conf.urls.static import static
-from .views import EmployeeListView, EmployeeView, CreateEmployeeView, UpdateEmployeeView, DeleteEmployeeView, ReportView, ReportFileView, DeleteEmployeeAjaxView, ProfessionListView, CreateProfessionView, UpdateProfessionView, DeleteProfessionView
+from django.urls import path
+
+from employee_list.settings.base import (DEBUG, MEDIA_ROOT, MEDIA_URL,
+                                         STATIC_ROOT, STATIC_URL)
+
+from . import views
+from .views import (CreateEmployeeView, CreateProfessionView,
+                    DeleteEmployeeAjaxView, DeleteEmployeeView,
+                    DeleteProfessionView, EmployeeListView, EmployeeView,
+                    ProfessionListView, ReportFileView, ReportView,
+                    UpdateEmployeeView, UpdateProfessionView)
 
 urlpatterns = [
     path('', EmployeeListView.as_view(), name='epmloyee_list_view'),

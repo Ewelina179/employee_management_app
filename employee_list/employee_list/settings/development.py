@@ -1,5 +1,7 @@
-from .base import *
 import os
+
+from .base import *
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 DATABASES = {

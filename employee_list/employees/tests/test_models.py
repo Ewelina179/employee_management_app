@@ -2,6 +2,7 @@ import pytest
 
 from employees.models import Employee
 
+
 @pytest.mark.django_db
 def test_employee_in_db(employee):
     employee_in = Employee.objects.get(first_name = "Jan", last_name = "Nowak")
