@@ -1,10 +1,8 @@
 from django.conf.urls.static import static
 from django.urls import path
 
-from employee_list.settings.base import (DEBUG, MEDIA_ROOT, MEDIA_URL,
-                                         STATIC_ROOT, STATIC_URL)
+from employee_list.settings.base import (MEDIA_ROOT, MEDIA_URL)
 
-from . import views
 from .views import (CreateEmployeeView, CreateProfessionView,
                     DeleteEmployeeAjaxView, DeleteEmployeeView,
                     DeleteProfessionView, EmployeeListView, EmployeeView,
@@ -25,4 +23,4 @@ urlpatterns = [
     path('<pk>/edit_profession/', UpdateProfessionView.as_view(), name='update_profession'),
     path('<pk>/delete_profession/', DeleteProfessionView.as_view(), name='delete_profession')
 ]
-urlpatterns += static(MEDIA_URL,document_root=MEDIA_ROOT)
+urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)

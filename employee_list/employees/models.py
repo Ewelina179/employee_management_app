@@ -8,6 +8,7 @@ class Employee(models.Model):
     profession = models.ForeignKey('employees.Profession', on_delete=models.PROTECT, null=True)
     avatar = models.ImageField(default='default.jpg')
 
+
 class Profession(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
