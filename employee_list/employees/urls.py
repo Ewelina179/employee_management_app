@@ -21,8 +21,8 @@ urlpatterns = [
     path('<pk>/deleteajax/', DeleteEmployeeAjaxView.as_view(), name='delete_employee_ajax'),
     path('csv/', ReportFileView.as_view(), name='report'),
     path('professions/', ProfessionListView.as_view(), name='profession_list_view'),
-    path('createprofession/', CreateProfessionView.as_view(), name='create_profession'),
-    path('<pk>/editprofession/', UpdateProfessionView.as_view(), name='update_profession'),
-    path('<pk>/deleteprofession/', DeleteProfessionView.as_view(), name='delete_profession')
+    path('create_profession/', CreateProfessionView.as_view(), name='create_profession'),
+    path('<pk>/edit_profession/', UpdateProfessionView.as_view(), name='update_profession'),
+    path('<pk>/delete_profession/', DeleteProfessionView.as_view(), name='delete_profession')
 ]
 urlpatterns += static(MEDIA_URL,document_root=MEDIA_ROOT)
