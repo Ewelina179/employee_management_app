@@ -69,13 +69,10 @@ class ReportFileView(View):
     def get(self, request):
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="raport.csv"'
-        avg = Employee.objects.all().values('profession').annotate(Avg('age')).order_by('profession_id')
-        profession_name = Profession.objects.filter(id__in=Subquery(avg.values('profession'))).all().order_by('id')
-        lst = [list(avg), list(profession_name)]
-        avg_and_profession_name = zip(*lst)
+        avg = Employee.objects.values("profession__name").annotate(avg_age=Avg("age"))
         writer = csv.writer(response)
-        for element in avg_and_profession_name:
-            writer.writerow([element[0]['age__avg'], element[1]])
+        for element in avg:
+            writer.writerow((element["profession__name"], element["avg_age"]))
         return response
 
 
