@@ -1,7 +1,7 @@
 from django.conf.urls.static import static
 from django.urls import path
 
-from employee_list.settings.base import (MEDIA_ROOT, MEDIA_URL)
+from employee_list.settings import (MEDIA_ROOT, MEDIA_URL)
 
 from .views import (CreateEmployeeView, CreateProfessionView,
                     DeleteEmployeeAjaxView, DeleteEmployeeView,

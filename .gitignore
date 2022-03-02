@@ -9,4 +9,5 @@ myenv/
 !.vscode/tasks.json 
 !.vscode/launch.json 
 !.vscode/extensions.json
-migrations/
+#migrations/
+.env
