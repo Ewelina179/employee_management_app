@@ -50,12 +50,28 @@ class UpdateEmployeeView(UpdateView):
     success_url = "/"
     template_name = "employee/employee_update_form.html"
 
+    def get(self, request, pk):
+        try:
+            self.object = Employee.objects.get(id = pk)
+            context = self.get_context_data(object=self.object)
+            return self.render_to_response(context)
+        except Employee.DoesNotExist:
+            return HttpResponse('Employee not found')
+
 
 class DeleteEmployeeView(DeleteView):
 
     model = Employee
     success_url = "/"
     template_name = "employee/employee_delete.html"
+
+    def get(self, request, pk):
+        try:
+            self.object = Employee.objects.get(id = pk)
+            context = self.get_context_data(object=self.object)
+            return self.render_to_response(context)
+        except Employee.DoesNotExist:
+            return HttpResponse('Employee not found')
 
 
 class ReportView(View):
@@ -121,6 +137,14 @@ class UpdateProfessionView(UpdateView):
     success_url = "/"
     template_name = "profession/profession_update.html"
 
+    def get(self, request, pk):
+        try:
+            self.object = Profession.objects.get(id = pk)
+            context = self.get_context_data(object=self.object)
+            return self.render_to_response(context)
+        except Profession.DoesNotExist:
+            return HttpResponse('Profession not found')
+
 
 class DeleteProfessionView(DeleteView):
 
@@ -128,10 +152,16 @@ class DeleteProfessionView(DeleteView):
     success_url = "/"
     template_name = "employee/employee_delete.html"
 
+    def get(self, request, pk):
+        try:
+            self.object = Profession.objects.get(id = pk)
+            context = self.get_context_data(object=self.object)
+            return self.render_to_response(context)
+        except Profession.DoesNotExist:
+            return HttpResponse('Profession not found')
+
     def post(self, request, *args, **kwargs):
         try:
             return self.delete(request, *args, **kwargs)
-        except Profession.DoesNotExist:
-            return HttpResponse("Nie ma takiego zawodu w bazie.")
         except ProtectedError:
             return HttpResponse("Nie można usunąć zawodu, bo ma przypisanego pracownika.")
