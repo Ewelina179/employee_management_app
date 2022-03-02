@@ -26,6 +26,14 @@ class EmployeeView(DetailView):
     context_object_name = 'employee'
     template_name = "employee/employee_detail.html"
 
+    def get(self, request, pk):
+        try:
+            self.object = Employee.objects.get(id = pk)
+            context = self.get_context_data(object=self.object)
+            return self.render_to_response(context)
+        except Employee.DoesNotExist:
+            return HttpResponse('Employee not found')
+
 
 class CreateEmployeeView(CreateView):
 
@@ -123,5 +131,7 @@ class DeleteProfessionView(DeleteView):
     def post(self, request, *args, **kwargs):
         try:
             return self.delete(request, *args, **kwargs)
+        except Profession.DoesNotExist:
+            return HttpResponse("Nie ma takiego zawodu w bazie.")
         except ProtectedError:
             return HttpResponse("Nie można usunąć zawodu, bo ma przypisanego pracownika.")
