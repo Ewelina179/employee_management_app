@@ -82,8 +82,8 @@ def is_ajax(request):
 
 class DeleteEmployeeAjaxView(View):
     def get(self, request, pk):
-        employee_to_delete = Employee.objects.get(id=pk)
-        if is_ajax(request=request):
+        employee_to_delete = Employee.objects.filter(id=pk).first()
+        if is_ajax(request=request) and employee_to_delete:
             employee_to_delete.delete()
             response = {"message": "deleted"}
             return JsonResponse(response)
