@@ -1,0 +1,22 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_DB: user
+      POSTGRES_PASSWORD: user1234
+    volumes:
+    - pgdata:/var/lib/postgresql/data
+  employee_list:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./employee_list:/employee_list
+    command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - db
+volumes:
+  pgdata:
