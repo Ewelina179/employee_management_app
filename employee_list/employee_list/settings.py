@@ -38,7 +38,7 @@ DEBUG = True
 #DEBUG = os.getenv("DEBUG", "False") == "True"
 #DEBUG = env("DEBUG", default="True")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
