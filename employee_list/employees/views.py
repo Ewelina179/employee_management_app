@@ -2,7 +2,7 @@ import csv
 
 from django.db.models import Avg, ProtectedError, Subquery
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.views import View
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -18,22 +18,17 @@ class EmployeeListView(ListView):
     template_name = 'employee/list_of_employees.html'
     paginate_by = 10
     ordering = ['last_name']
-
-
+    
+    
 class EmployeeView(DetailView):
 
     model = Employee
     context_object_name = 'employee'
     template_name = "employee/employee_detail.html"
 
-    def get(self, request, pk):
-        try:
-            self.object = Employee.objects.get(id = pk)
-            context = self.get_context_data(object=self.object)
-            return self.render_to_response(context)
-        except Employee.DoesNotExist:
-            return HttpResponse('Employee not found')
-
+    def get(self, request, *args, **kwargs):
+        get_object_or_404(Employee, id=kwargs['pk']) 
+        return super().get(request, *args, **kwargs)
 
 class CreateEmployeeView(CreateView):
 
@@ -50,13 +45,9 @@ class UpdateEmployeeView(UpdateView):
     success_url = "/"
     template_name = "employee/employee_update_form.html"
 
-    def get(self, request, pk):
-        try:
-            self.object = Employee.objects.get(id = pk)
-            context = self.get_context_data(object=self.object)
-            return self.render_to_response(context)
-        except Employee.DoesNotExist:
-            return HttpResponse('Employee not found')
+    def get(self, request, *args, **kwargs):
+        get_object_or_404(Employee, id=kwargs['pk']) 
+        return super().get(request, *args, **kwargs)
 
 
 class DeleteEmployeeView(DeleteView):
@@ -65,13 +56,7 @@ class DeleteEmployeeView(DeleteView):
     success_url = "/"
     template_name = "employee/employee_delete.html"
 
-    def get(self, request, pk):
-        try:
-            self.object = Employee.objects.get(id = pk)
-            context = self.get_context_data(object=self.object)
-            return self.render_to_response(context)
-        except Employee.DoesNotExist:
-            return HttpResponse('Employee not found')
+    
 
 
 class ReportView(View):
