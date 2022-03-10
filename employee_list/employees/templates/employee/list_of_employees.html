@@ -6,6 +6,7 @@
 <br>
 <p> Lista pracowników</p>
 
+
 <ol>
 {% for employee in page_obj %}
     <li>{{employee.first_name}}</li>
@@ -16,6 +17,8 @@
     <a href="{% url 'details' employee.pk %}">Dane pracownika</a>
     <br>
     <a href="{% url 'delete_employee_ajax' employee.id %}" class="link-delete text-danger">Usuń pracownika</a>
+    {% empty %}
+    <p>Brak pracowników w bazie.</p>
 {% endfor %}
 </ol>
 
