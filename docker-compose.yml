@@ -4,7 +4,7 @@ services:
     image: postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_DB: ${POSTGRES_NAME}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
     - pgdata:/var/lib/postgresql/data
@@ -13,6 +13,11 @@ services:
       context: .
     ports:
       - "8000:8000"
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_NAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - ./employee_list:/employee_list
     command: python manage.py runserver 0.0.0.0:8000

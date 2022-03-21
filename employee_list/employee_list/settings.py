@@ -19,6 +19,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
+<<<<<<< HEAD
+=======
+SECRET_KEY = os.environ.get("SECRET_KEY")
+>>>>>>> ae5e74b5b4b4968468439771c6b2feb888aed88e
 
 
 # Quick-start development settings - unsuitable for production
