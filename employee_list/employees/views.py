@@ -1,14 +1,13 @@
 import csv
+from msilib.schema import Error
 
 from django.db.models import Avg, ProtectedError, Subquery
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
-
-from django.views.generic.base import ContextMixin
 
 from .forms import EmployeeForm
 from .models import Employee, Profession
@@ -87,7 +86,6 @@ class ReportFileView(View):
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
-
 class DeleteEmployeeAjaxView(View):
     def get(self, request, pk):
         try:
@@ -98,7 +96,7 @@ class DeleteEmployeeAjaxView(View):
             employee_to_delete.delete()
             response = {"message": "Employee deleted"}
         else:
-            response = {"message": "Coś nie tak z ajaxem"}
+            response = {"message": "Wroung route\Deleting available through ajax"}
         return JsonResponse(response)
 
 
@@ -144,12 +142,16 @@ class DeleteProfessionView(DeleteView):
         try:
             self.object = Profession.objects.get(id = pk)
         except Profession.DoesNotExist:
+            print("hej")
             return HttpResponse('Profession not found')
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
 
     def post(self, request, pk, *args, **kwargs):
         try:
-            return self.delete(request, *args, **kwargs)
+            self.delete(request, *args, **kwargs)
         except ProtectedError:
             return HttpResponse("Nie można usunąć zawodu, bo ma przypisanego pracownika.")
+        except:
+            return HttpResponse("Jeszcze inny błąd?")
+        return HttpResponse("Usunięto pracownika")
