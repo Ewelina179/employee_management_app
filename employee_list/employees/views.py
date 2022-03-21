@@ -2,7 +2,7 @@ import csv
 from msilib.schema import Error
 
 from django.db.models import Avg, ProtectedError, Subquery
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest, Http404
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.generic.detail import DetailView
@@ -127,7 +127,10 @@ class UpdateProfessionView(UpdateView):
         try:
             self.object = Profession.objects.get(id = pk)
         except Profession.DoesNotExist:
-            return HttpResponse('Profession not found')
+            context = {
+                "message": "Nie znaleziono zawodu"
+            }
+            return render(request, "404.html", context)
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
 
@@ -142,8 +145,11 @@ class DeleteProfessionView(DeleteView):
         try:
             self.object = Profession.objects.get(id = pk)
         except Profession.DoesNotExist:
-            print("hej")
-            return HttpResponse('Profession not found')
+            #raise Http404("Nie znaleziono zawodu.")
+            context = {
+                "message": "Nie znaleziono zawodu."
+            }
+            return render(request, "404.html", context)
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
 
@@ -151,7 +157,10 @@ class DeleteProfessionView(DeleteView):
         try:
             self.delete(request, *args, **kwargs)
         except ProtectedError:
-            return HttpResponse("Nie można usunąć zawodu, bo ma przypisanego pracownika.")
+            context = {
+                "message": "Nie można usunąć zawodu, bo ma przypisanego pracownika."
+            }
+            return render(request, "400.html", context)
         except:
-            return HttpResponse("Jeszcze inny błąd?")
+            return HttpResponseBadRequest("Tutaj jeszcze inny rodzaj błędu.")
         return HttpResponse("Usunięto pracownika")
