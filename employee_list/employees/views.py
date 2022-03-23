@@ -1,5 +1,4 @@
 import csv
-from msilib.schema import Error
 
 from django.db.models import Avg, ProtectedError, Subquery
 from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest, Http404
