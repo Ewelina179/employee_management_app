@@ -20,7 +20,8 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - ./employee_list:/employee_list
-    command: python manage.py runserver 0.0.0.0:8000
+    command: sh ./scripts/run_backend.sh
+    restart: on-failure
     depends_on:
       - db
 volumes:
