@@ -1,8 +1,8 @@
 import csv
 
 from django.db.models import Avg, ProtectedError, Subquery
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest, Http404
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -11,6 +11,12 @@ from django.views.generic.list import ListView
 from .forms import EmployeeForm
 from .models import Employee, Profession
 
+class EmployeeView(View):
+
+    def get(self, request, *args, **kwargs):
+        get_object_or_404(self.model, id=kwargs['pk']) 
+        return super().get(request, *args, **kwargs)
+
 
 class EmployeeListView(ListView):
 
@@ -18,21 +24,13 @@ class EmployeeListView(ListView):
     template_name = 'employee/list_of_employees.html'
     paginate_by = 10
     ordering = ['last_name']
-
-
-class EmployeeView(DetailView):
+    
+    
+class EmployeeView(EmployeeView, DetailView):
 
     model = Employee
     context_object_name = 'employee'
     template_name = "employee/employee_detail.html"
-
-    def get(self, request, pk):
-        try:
-            self.object = Employee.objects.get(id = pk)
-            context = self.get_context_data(object=self.object)
-            return self.render_to_response(context)
-        except Employee.DoesNotExist:
-            return HttpResponse('Employee not found')
 
 
 class CreateEmployeeView(CreateView):
@@ -43,20 +41,12 @@ class CreateEmployeeView(CreateView):
     template_name = "employee/employee_create_form.html"
 
 
-class UpdateEmployeeView(UpdateView):
+class UpdateEmployeeView(EmployeeView, UpdateView):
 
     model = Employee
     fields = ['first_name', 'last_name', 'age', 'profession', 'avatar']
     success_url = "/"
     template_name = "employee/employee_update_form.html"
-
-    def get(self, request, pk):
-        try:
-            self.object = Employee.objects.get(id = pk)
-            context = self.get_context_data(object=self.object)
-            return self.render_to_response(context)
-        except Employee.DoesNotExist:
-            return HttpResponse('Employee not found')
 
 
 class DeleteEmployeeView(DeleteView):
@@ -65,15 +55,7 @@ class DeleteEmployeeView(DeleteView):
     success_url = "/"
     template_name = "employee/employee_delete.html"
 
-    def get(self, request, pk):
-        try:
-            self.object = Employee.objects.get(id = pk)
-            context = self.get_context_data(object=self.object)
-            return self.render_to_response(context)
-        except Employee.DoesNotExist:
-            return HttpResponse('Employee not found')
-
-
+    
 class ReportView(View):
 
     def get(self, request):
@@ -103,15 +85,18 @@ class ReportFileView(View):
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
-
 class DeleteEmployeeAjaxView(View):
     def get(self, request, pk):
-        employee_to_delete = Employee.objects.filter(id=pk).first()
-        if is_ajax(request=request) and employee_to_delete:
+        try:
+            employee_to_delete = Employee.objects.get(id = pk)
+        except Employee.DoesNotExist:
+            return JsonResponse({"message": "Employee not found."})
+        if is_ajax(request=request):
             employee_to_delete.delete()
-            response = {"message": "deleted"}
-            return JsonResponse(response)
-        return JsonResponse({"message": "something wrong"})
+            response = {"message": "Employee deleted"}
+        else:
+            response = {"message": "Wroung route\Deleting available through ajax"}
+        return JsonResponse(response)
 
 
 class ProfessionListView(ListView):
@@ -140,10 +125,13 @@ class UpdateProfessionView(UpdateView):
     def get(self, request, pk):
         try:
             self.object = Profession.objects.get(id = pk)
-            context = self.get_context_data(object=self.object)
-            return self.render_to_response(context)
         except Profession.DoesNotExist:
-            return HttpResponse('Profession not found')
+            context = {
+                "message": "Nie znaleziono zawodu"
+            }
+            return render(request, "404.html", context)
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
 
 
 class DeleteProfessionView(DeleteView):
@@ -155,13 +143,23 @@ class DeleteProfessionView(DeleteView):
     def get(self, request, pk):
         try:
             self.object = Profession.objects.get(id = pk)
-            context = self.get_context_data(object=self.object)
-            return self.render_to_response(context)
         except Profession.DoesNotExist:
-            return HttpResponse('Profession not found')
+            #raise Http404("Nie znaleziono zawodu.")
+            context = {
+                "message": "Nie znaleziono zawodu."
+            }
+            return render(request, "404.html", context)
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, pk, *args, **kwargs):
         try:
-            return self.delete(request, *args, **kwargs)
+            self.delete(request, *args, **kwargs)
         except ProtectedError:
-            return HttpResponse("Nie można usunąć zawodu, bo ma przypisanego pracownika.")
+            context = {
+                "message": "Nie można usunąć zawodu, bo ma przypisanego pracownika."
+            }
+            return render(request, "400.html", context)
+        except:
+            return HttpResponseBadRequest("Tutaj jeszcze inny rodzaj błędu.")
+        return HttpResponse("Usunięto pracownika")
