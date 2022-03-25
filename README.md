@@ -15,6 +15,4 @@ An application that allows to add, delete, update and display employees and crea
 
 ## How to run application with docker-compose
 
-- export environment variables (sample of them available on file .env_sample)
-- docker-compose up
-- docker-compose exec employee_list python manage.py migrate
+- docker-compose --env-file ./config/.env.dev up (to set development environment variables)
