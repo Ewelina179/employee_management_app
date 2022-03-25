@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,7 +32,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
  
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 #DEBUG = os.getenv("DEBUG", "False") == "True"
 #DEBUG = env("DEBUG", default="True")
 
@@ -94,7 +97,7 @@ DATABASES = {
         'NAME': os.environ.get("POSTGRES_NAME"),
         'USER': os.environ.get("POSTGRES_USER"),
         'PASSWORD': os.environ.get("POSTGRES_PASSWORD"),
-        'HOST': 'db',
+        'HOST': 'localhost',
         'PORT': 5432,
     }
 }
@@ -140,3 +143,13 @@ MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+sentry_sdk.init(
+    dsn=os.environ.get('SENTRY_DSN'),
+    integrations=[DjangoIntegration()],
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)
