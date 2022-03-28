@@ -1,15 +1,28 @@
 import csv
+from xml.sax import handler
 
 from django.db.models import Avg, ProtectedError, Subquery
-from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest, Http404
+from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest, Http404, HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404
+from django.template import RequestContext
 from django.views import View
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
+from django.core.exceptions import ObjectDoesNotExist
 
 from .forms import EmployeeForm
 from .models import Employee, Profession
+
+
+def handler400(request, exception=None):
+    return render(request, "400.html", {})
+
+def handler404(request, exception):
+    return render(request, "404.html", {})
+
+def handler500(request):
+    return render(request, "500.html")
 
 class EmployeeView(View):
 
@@ -86,6 +99,7 @@ def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 class DeleteEmployeeAjaxView(View):
+    
     def get(self, request, pk):
         try:
             employee_to_delete = Employee.objects.get(id = pk)
@@ -122,35 +136,12 @@ class UpdateProfessionView(UpdateView):
     success_url = "/"
     template_name = "profession/profession_update.html"
 
-    def get(self, request, pk):
-        try:
-            self.object = Profession.objects.get(id = pk)
-        except Profession.DoesNotExist:
-            context = {
-                "message": "Nie znaleziono zawodu"
-            }
-            return render(request, "404.html", context)
-        context = self.get_context_data(object=self.object)
-        return self.render_to_response(context)
-
 
 class DeleteProfessionView(DeleteView):
 
     model = Profession
     success_url = "/"
     template_name = "employee/employee_delete.html"
-
-    def get(self, request, pk):
-        try:
-            self.object = Profession.objects.get(id = pk)
-        except Profession.DoesNotExist:
-            #raise Http404("Nie znaleziono zawodu.")
-            context = {
-                "message": "Nie znaleziono zawodu."
-            }
-            return render(request, "404.html", context)
-        context = self.get_context_data(object=self.object)
-        return self.render_to_response(context)
 
     def post(self, request, pk, *args, **kwargs):
         try:
@@ -160,6 +151,4 @@ class DeleteProfessionView(DeleteView):
                 "message": "Nie można usunąć zawodu, bo ma przypisanego pracownika."
             }
             return render(request, "400.html", context)
-        except:
-            return HttpResponseBadRequest("Tutaj jeszcze inny rodzaj błędu.")
-        return HttpResponse("Usunięto pracownika")
+        return HttpResponse("Usunięto zawód")
