@@ -1,4 +1,5 @@
 import csv
+from http.client import BAD_REQUEST
 from xml.sax import handler
 
 from django.db.models import Avg, ProtectedError, Subquery
@@ -9,17 +10,23 @@ from django.views import View
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, BadRequest
 
 from .forms import EmployeeForm
 from .models import Employee, Profession
 
 
 def handler400(request, exception=None):
-    return render(request, "400.html", {})
+    context = {
+       "message": exception
+    }
+    return render(request, "400.html", context)
 
 def handler404(request, exception):
-    return render(request, "404.html", {})
+    context = {
+       "message": exception
+    }
+    return render(request, "404.html", context)
 
 def handler500(request):
     return render(request, "500.html")
@@ -147,8 +154,5 @@ class DeleteProfessionView(DeleteView):
         try:
             self.delete(request, *args, **kwargs)
         except ProtectedError:
-            context = {
-                "message": "Nie można usunąć zawodu, bo ma przypisanego pracownika."
-            }
-            return render(request, "400.html", context)
+            raise BadRequest("Nie można usunąć zawodu, bo ma przypisanego pracownika.")
         return HttpResponse("Usunięto zawód")
