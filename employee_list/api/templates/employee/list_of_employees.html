@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<a href="{% url 'url_for_report' %}">Raport nt. średniej wieku wg zawodów</a>
+<br>
+<p> Lista pracowników</p>
+
+
+<ol>
+{% for employee in page_obj %}
+    <li>{{employee.first_name}}</li>
+    {{employee.last_name}}
+    <br>
+    {{employee.profession.name}}
+    <br>
+    <a href="{% url 'details' employee.pk %}">Dane pracownika</a>
+    <br>
+    <a href="{% url 'delete_employee_ajax' employee.id %}" class="link-delete text-danger">Usuń pracownika</a>
+    {% empty %}
+    <p>Brak pracowników w bazie.</p>
+{% endfor %}
+</ol>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+<a href="{% url 'create' %}">Dodaj pracownika</a>
+
+<script > 
+$(".link-delete").on("click", function(e){
+    e.preventDefault();
+    var $this = $(this);
+    if (confirm("Czy chcesz usunąć pracownika?")){
+        $.ajax({
+            url: $this.attr("href"),
+            type: "GET",
+            dataType: "json",
+            success: function(resp){
+                if(resp.message === 'deleted'){
+                    $this.parents('.record').fadeOut("slow", function(){
+                        $this.parents('.record').remove();
+                    });
+                    
+                }
+                else{
+                    alert(resp.message);
+                }
+            },
+            error: function(resp){
+                console.log("Coś jest nie tak")
+            }
+
+        });
+    }
+    return false;
+}
+)
+</script>
+
+
+
+
+{% endblock %}
