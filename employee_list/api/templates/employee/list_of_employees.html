@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+{% load i18n %}
 <a href="{% url 'url_for_report' %}">Raport nt. średniej wieku wg zawodów</a>
 <br>
-<p> Lista pracowników</p>
+<p>{% translate "Lista pracowników"  %}</p>
 
 
 <ol>
