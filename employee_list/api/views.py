@@ -10,6 +10,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 from django.core.exceptions import ObjectDoesNotExist, BadRequest
+from django.utils.translation import gettext as _
 
 from .forms import EmployeeForm
 from employees.models import Employee, Profession
@@ -154,8 +155,10 @@ class DeleteProfessionView(DeleteView):
         try:
             self.delete(request, *args, **kwargs)
         except ProtectedError:
-            raise BadRequest("Nie można usunąć zawodu, bo ma przypisanego pracownika.")
-        return HttpResponse("Usunięto zawód")
+            output = _("Nie można usunąć zawodu, bo ma przypisanego pracownika.")
+            raise BadRequest(output)
+        output = _("Usunięto zawód")
+        return HttpResponse(output)
 
 
 class EmployeeViewset(viewsets.ModelViewSet):
