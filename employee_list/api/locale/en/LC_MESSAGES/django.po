@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-08 16:22+0200\n"
+"POT-Creation-Date: 2022-04-08 17:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
 #: api/templates/employee/list_of_employees.html:7
 msgid "Lista pracowników"
 msgstr "List of employees"
+
+#: api/views.py:158
+msgid "Nie można usunąć zawodu, bo ma przypisanego pracownika."
+msgstr "Cannot delete a profession, employee assigned to it"
+
+#: api/views.py:160
+msgid "Usunięto zawód"
+msgstr "Profession deleted"
