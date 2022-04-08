@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
+#import sentry_sdk
+#from sentry_sdk.integrations.django import DjangoIntegration
 
 
 
@@ -99,7 +99,7 @@ DATABASES = {
         'NAME': os.environ.get("POSTGRES_NAME"),
         'USER': os.environ.get("POSTGRES_USER"),
         'PASSWORD': os.environ.get("POSTGRES_PASSWORD"),
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': 5432,
     }
 }
@@ -130,6 +130,11 @@ TIME_ZONE = 'Europe/Warsaw'
 USE_I18N = True
 
 USE_TZ = True
+
+LANGUAGES = [
+    ('pl', ('Polish')),
+    ('en', ('English'))
+]
 
 
 # Static files (CSS, JavaScript, Images)

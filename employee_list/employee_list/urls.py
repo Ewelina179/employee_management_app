@@ -13,5 +13,6 @@ urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
     path('', include('api.urls')),
     path('', include(profession_router.urls)),
-    path('', include(employees_router.urls))
+    path('', include(employees_router.urls)),
+    path('i18n/', include('django.conf.urls.i18n'))
 )
