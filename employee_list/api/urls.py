@@ -1,5 +1,5 @@
 from django.conf.urls.static import static
-from django.urls import path
+from django.urls import path, include
 
 from employee_list.settings import (MEDIA_ROOT, MEDIA_URL)
 
@@ -7,7 +7,7 @@ from api.views import (CreateEmployeeView, CreateProfessionView,
                     DeleteEmployeeAjaxView, DeleteEmployeeView,
                     DeleteProfessionView, EmployeeListView, EmployeeView,
                     ProfessionListView, ReportFileView, ReportView,
-                    UpdateEmployeeView, UpdateProfessionView)
+                    UpdateEmployeeView, UpdateProfessionView, register)
 
 
 from rest_framework import routers
@@ -21,6 +21,8 @@ profession_router = routers.DefaultRouter()
 profession_router.register("professions", viewset=ProfessionViewSet, basename="professions")
 
 urlpatterns = [
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("register/", register, name="register"),
     path('', EmployeeListView.as_view(), name='epmloyee_list_view'),
     path('employee/<pk>/details/', EmployeeView.as_view(), name='details'),
     path('employee/create/', CreateEmployeeView.as_view(), name='create'),

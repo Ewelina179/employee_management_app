@@ -3,7 +3,8 @@ import csv
 from rest_framework import viewsets
 from django.db.models import Avg, ProtectedError, Subquery
 from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest, Http404, HttpResponseNotFound
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.template import RequestContext
 from django.views import View
 from django.views.generic.detail import DetailView
@@ -11,10 +12,13 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 from django.core.exceptions import ObjectDoesNotExist, BadRequest
 from django.utils.translation import gettext as _
+from django.contrib.auth import login
 
 from .forms import EmployeeForm
 from employees.models import Employee, Profession
 from .serializers import EmployeeSerializer, ProfessionSerializer
+from .forms import CustomUserCreationForm
+
 
 
 def handler400(request, exception=None):
@@ -174,3 +178,18 @@ class ProfessionViewSet(viewsets.ModelViewSet):
 
     def get_serializer_context(self):
         return {'request': self.request}
+
+
+def register(request):
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect(reverse("epmloyee_list_view"))
+    else:
+        form = CustomUserCreationForm()
+    context = {
+            'form':form,
+        }
+    return render(request, "registration/register.html", context)
