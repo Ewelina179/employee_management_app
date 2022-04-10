@@ -13,6 +13,8 @@ from django.views.generic.list import ListView
 from django.core.exceptions import ObjectDoesNotExist, BadRequest
 from django.utils.translation import gettext as _
 from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from .forms import EmployeeForm
 from employees.models import Employee, Profession
@@ -36,7 +38,7 @@ def handler404(request, exception):
 def handler500(request):
     return render(request, "500.html")
 
-class EmployeeView(View):
+class EmployeeView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         get_object_or_404(self.model, id=kwargs['pk']) 
@@ -58,7 +60,7 @@ class EmployeeView(EmployeeView, DetailView):
     template_name = "employee/employee_detail.html"
 
 
-class CreateEmployeeView(CreateView):
+class CreateEmployeeView(LoginRequiredMixin, CreateView):
 
     model = Employee
     form_class = EmployeeForm
@@ -74,14 +76,14 @@ class UpdateEmployeeView(EmployeeView, UpdateView):
     template_name = "employee/employee_update_form.html"
 
 
-class DeleteEmployeeView(DeleteView):
+class DeleteEmployeeView(LoginRequiredMixin, DeleteView):
 
     model = Employee
     success_url = "/"
     template_name = "employee/employee_delete.html"
 
     
-class ReportView(View):
+class ReportView(LoginRequiredMixin, View):
 
     def get(self, request):
         avg = Employee.objects.all().values('profession').annotate(Avg('age')).order_by('profession_id')
@@ -95,7 +97,7 @@ class ReportView(View):
         return render(request, "employee/report.html", context)
 
 
-class ReportFileView(View):
+class ReportFileView(LoginRequiredMixin, View):
 
     def get(self, request):
         response = HttpResponse(content_type='text/csv')
@@ -110,7 +112,7 @@ class ReportFileView(View):
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
-class DeleteEmployeeAjaxView(View):
+class DeleteEmployeeAjaxView(LoginRequiredMixin, View):
     
     def get(self, request, pk):
         try:
@@ -169,12 +171,14 @@ class EmployeeViewset(viewsets.ModelViewSet):
 
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class ProfessionViewSet(viewsets.ModelViewSet):
 
     queryset = Profession.objects.all()
     serializer_class = ProfessionSerializer
+    permission_classes = [AllowAny]
 
     def get_serializer_context(self):
         return {'request': self.request}
