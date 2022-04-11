@@ -1,5 +1,6 @@
 from django.conf.urls.static import static
 from django.urls import path, include
+from rest_framework.authtoken import views
 
 from employee_list.settings import (MEDIA_ROOT, MEDIA_URL)
 
@@ -23,6 +24,7 @@ profession_router.register("professions", viewset=ProfessionViewSet, basename="p
 urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path("register/", register, name="register"),
+    path('api-token-auth/', views.obtain_auth_token),
     path('', EmployeeListView.as_view(), name='epmloyee_list_view'),
     path('employee/<pk>/details/', EmployeeView.as_view(), name='details'),
     path('employee/create/', CreateEmployeeView.as_view(), name='create'),
