@@ -1,6 +1,6 @@
 import csv
+from io import StringIO
 
-from rest_framework import viewsets
 from django.db.models import Avg, ProtectedError, Subquery
 from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest, Http404, HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404, redirect
@@ -15,6 +15,10 @@ from django.utils.translation import gettext as _
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework import viewsets, status
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
 
 from .forms import EmployeeForm
 from employees.models import Employee, Profession
@@ -197,3 +201,29 @@ def register(request):
             'form':form,
         }
     return render(request, "registration/register.html", context)
+
+
+class GetReportView(APIView):
+
+    def get(self, request):
+        #try:
+        in_memory_file = StringIO()
+        print(type(in_memory_file))
+        avg = Employee.objects.values("profession__name").annotate(avg_age=Avg("age"))
+        writer = csv.writer(in_memory_file)
+        for element in avg:
+            writer.writerow((element["profession__name"], element["avg_age"]))
+        
+        file = in_memory_file.getvalue()
+        return Response(
+            {
+            "status": "succes", "data": file
+            },
+            status = status.HTTP_200_OK
+
+        )
+
+        #except:
+        #    return Response(
+        #        {"status": "error"}, status = status.HTTP_
+        #    )

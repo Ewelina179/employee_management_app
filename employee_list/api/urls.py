@@ -8,7 +8,7 @@ from api.views import (CreateEmployeeView, CreateProfessionView,
                     DeleteEmployeeAjaxView, DeleteEmployeeView,
                     DeleteProfessionView, EmployeeListView, EmployeeView,
                     ProfessionListView, ReportFileView, ReportView,
-                    UpdateEmployeeView, UpdateProfessionView, register)
+                    UpdateEmployeeView, UpdateProfessionView, GetReportView, register)
 
 
 from rest_framework import routers
@@ -36,6 +36,7 @@ urlpatterns = [
     path('profession/', ProfessionListView.as_view(), name='profession_list_view'),
     path('profession/create', CreateProfessionView.as_view(), name='create_profession'),
     path('profession/<pk>/edit/', UpdateProfessionView.as_view(), name='update_profession'),
-    path('profession/<pk>/delete/', DeleteProfessionView.as_view(), name='delete_profession')
+    path('profession/<pk>/delete/', DeleteProfessionView.as_view(), name='delete_profession'),
+    path('getreport/', GetReportView.as_view(), name='getreport' )
 ]
 urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)
