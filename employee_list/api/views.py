@@ -203,17 +203,17 @@ def register(request):
         }
     return render(request, "registration/register.html", context)
 
-class CSVFileRenderer(BaseRenderer):
+#class CSVFileRenderer(BaseRenderer):
 
-    media_type = 'text/csv'
-    format = 'csv'
+#    media_type = 'text/csv'
+#    format = 'csv'
 
-    def render(self, data):
-        return data
+#    def render(self, data):
+#        return data
 
 class GetReportView(APIView):
 
-    rendered_classes = [CSVFileRenderer]
+#    rendered_classes = [CSVFileRenderer]
 
     def get(self, request):
         try:
