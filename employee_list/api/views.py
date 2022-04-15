@@ -18,6 +18,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import viewsets, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.renderers import BaseRenderer
 
 
 from .forms import EmployeeForm
@@ -202,28 +203,34 @@ def register(request):
         }
     return render(request, "registration/register.html", context)
 
+class CSVFileRenderer(BaseRenderer):
+
+    media_type = 'text/csv'
+    format = 'csv'
+
+    def render(self, data):
+        return data
 
 class GetReportView(APIView):
 
+    rendered_classes = [CSVFileRenderer]
+
     def get(self, request):
-        #try:
-        in_memory_file = StringIO()
-        print(type(in_memory_file))
-        avg = Employee.objects.values("profession__name").annotate(avg_age=Avg("age"))
-        writer = csv.writer(in_memory_file)
-        for element in avg:
-            writer.writerow((element["profession__name"], element["avg_age"]))
-        
-        file = in_memory_file.getvalue()
-        return Response(
-            {
-            "status": "succes", "data": file
-            },
-            status = status.HTTP_200_OK
+        try:
+            in_memory_file = StringIO()
+            avg = Employee.objects.values("profession__name").annotate(avg_age=Avg("age"))
+            writer = csv.writer(in_memory_file)
 
-        )
-
-        #except:
-        #    return Response(
-        #        {"status": "error"}, status = status.HTTP_
-        #    )
+            for element in avg:
+                writer.writerow((element["profession__name"], element["avg_age"]))
+            
+            file = in_memory_file.getvalue()
+            print(file)
+            return Response(
+                file,
+                status = status.HTTP_200_OK
+            )
+        except:
+            return Response(
+                {"status": "error"}, status = status.HTTP_400_BAD_REQUEST
+            )
