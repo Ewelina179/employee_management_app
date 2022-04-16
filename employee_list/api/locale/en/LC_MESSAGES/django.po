@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-08 17:03+0200\n"
+"POT-Creation-Date: 2022-04-16 18:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,10 +22,22 @@ msgstr ""
 msgid "Lista pracowników"
 msgstr "List of employees"
 
-#: api/views.py:158
+#: api/views.py:126
+msgid "Nie znaleziono pracownika."
+msgstr "Employee not found"
+
+#: api/views.py:130
+msgid "Usunięto pracownika."
+msgstr "Employee deleted"
+
+#: api/views.py:133
+msgid "Nie można w ten sposób usunąć pracownika."
+msgstr "Cannot delete a profession."
+
+#: api/views.py:172
 msgid "Nie można usunąć zawodu, bo ma przypisanego pracownika."
 msgstr "Cannot delete a profession, employee assigned to it"
 
-#: api/views.py:160
+#: api/views.py:174
 msgid "Usunięto zawód"
 msgstr "Profession deleted"

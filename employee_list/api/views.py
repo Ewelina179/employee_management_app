@@ -123,12 +123,15 @@ class DeleteEmployeeAjaxView(LoginRequiredMixin, View):
         try:
             employee_to_delete = Employee.objects.get(id = pk)
         except Employee.DoesNotExist:
-            return JsonResponse({"message": "Employee not found."})
+            output = _("Nie znaleziono pracownika.")
+            return JsonResponse({"message": output})
         if is_ajax(request=request):
             employee_to_delete.delete()
-            response = {"message": "Employee deleted"}
+            output = _("Usunięto pracownika.")
+            response = {"message": output}
         else:
-            response = {"message": "Wroung route\Deleting available through ajax"}
+            output = _("Nie można w ten sposób usunąć pracownika.")
+            response = {"message": output}
         return JsonResponse(response)
 
 
