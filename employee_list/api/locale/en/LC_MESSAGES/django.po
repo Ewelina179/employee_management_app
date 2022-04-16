@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-16 18:02+0200\n"
+"POT-Creation-Date: 2022-04-16 18:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,9 +18,101 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: api/templates/employee/list_of_employees.html:7
+#: api/templates/400.html:8
+msgid "Błąd 400"
+msgstr "400 Error"
+
+#: api/templates/404.html:7
+msgid "Nie znaleziono strony"
+msgstr "Page not found"
+
+#: api/templates/500.html:8
+msgid "Błąd 500"
+msgstr "500 Error"
+
+#: api/templates/base.html:14 api/templates/employee/list_of_employees.html:7
 msgid "Lista pracowników"
 msgstr "List of employees"
+
+#: api/templates/base.html:15
+#: api/templates/profession/list_of_professions.html:5
+msgid "Lista zawodów"
+msgstr "List of professions"
+
+#: api/templates/base.html:37
+msgid "Cześć, {{ user.username|default:'Niezalogowany użytkowniku' }}!"
+msgstr "Hello, {{ user.username|default:'Niezalogowany użytkowniku' }}!"
+
+#: api/templates/base.html:41
+msgid "Wylogouj"
+msgstr "Log out"
+
+#: api/templates/base.html:43 api/templates/registration/login.html:5
+msgid "Zaloguj"
+msgstr "Log in"
+
+#: api/templates/employee/employee_delete.html:9
+msgid "Czy jesteś pewien, że chcesz usunąć pracownika?"
+msgstr "Are you sure you want to delete profession?"
+
+#: api/templates/employee/employee_detail.html:5
+#: api/templates/employee/list_of_employees.html:17
+msgid "Dane pracownika"
+msgstr "Employee details"
+
+#: api/templates/employee/employee_detail.html:14
+#: api/templates/profession/list_of_professions.html:10
+msgid "Edytuj dane"
+msgstr "Edit"
+
+#: api/templates/employee/employee_detail.html:16
+msgid "Usuń pracownika"
+msgstr "Delete employee"
+
+#: api/templates/employee/list_of_employees.html:5
+msgid "Raport nt. średniej wieku wg zawodów"
+msgstr "Report - average age of each profession"
+
+#: api/templates/employee/list_of_employees.html:21
+msgid "Brak pracowników w bazie."
+msgstr "There are no employees"
+
+#: api/templates/employee/list_of_employees.html:43
+msgid "Dodaj pracownika"
+msgstr "Add employee"
+
+#: api/templates/employee/report.html:8
+msgid "Zawód"
+msgstr "Profession"
+
+#: api/templates/employee/report.html:9
+msgid "Średnia wieku"
+msgstr "Average of age"
+
+#: api/templates/employee/report.html:26
+msgid "Wygeneruj raport w formacie CSV"
+msgstr "Generate a report in CSV format"
+
+#: api/templates/profession/list_of_professions.html:12
+msgid "Usuń zawód"
+msgstr "Profession delete"
+
+#: api/templates/profession/list_of_professions.html:18
+msgid "Dodaj zawód"
+msgstr "Add profession"
+
+#: api/templates/registration/login.html:13
+#: api/templates/registration/register.html:5
+msgid "Rejestracja"
+msgstr ""
+
+#: api/templates/registration/login.html:14
+msgid "Wróć do strony głównej"
+msgstr ""
+
+#: api/templates/registration/register.html:13
+msgid "Logowanie"
+msgstr ""
 
 #: api/views.py:126
 msgid "Nie znaleziono pracownika."

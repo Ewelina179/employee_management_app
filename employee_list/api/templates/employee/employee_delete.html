@@ -1,8 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load i18n %}
+
 <form method="post">{% csrf_token %}
      
  
-    <p>Are you sure you want to delete "{{ object }}"?</p>
+    <p>{% translate "Czy jesteś pewien, że chcesz usunąć pracownika?" %}</p>
      
      
         <input type="submit" value="Confirm">
     </form>
+
+{% endblock %}

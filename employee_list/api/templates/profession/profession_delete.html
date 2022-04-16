@@ -1,8 +1,12 @@
 <form method="post">{% csrf_token %}
      
  
-    <p>Are you sure you want to delete "{{ object }}"?</p>
+    <p>{% translate "Czy jesteś pewien, że chcesz usunąć zawód? %}</p>
      
      
         <input type="submit" value="Confirm">
-    </form>
+</form>
+
+
+
+

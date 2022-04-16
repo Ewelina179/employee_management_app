@@ -1,21 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<p> Lista zawodów</p>
+{% load i18n %}
+<p>{% translate "Lista zawodów" %}</p>
 
 <ol>
 {% for profession in page_obj %}
     <li>{{profession.name}}</li>
-    <a href="{% url 'update_profession' profession.pk %}">Edytuj dane</a>
+    <a href="{% url 'update_profession' profession.pk %}">{% translate "Edytuj dane" %}</a>
     <form action="{% url 'delete_profession' profession.pk %}">
-        <button type="submit">Usuń zawód</button>
+        <button type="submit">{% translate "Usuń zawód" %}</button>
      </form>    
 {% endfor %}
 </ol>
 
 <form action="{% url 'create_profession' %}">
-    <button type="submit">Dodaj zawód</button>
+    <button type="submit">{% translate "Dodaj zawód" %}</button>
  </form>    
 
 

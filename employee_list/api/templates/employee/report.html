@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+{% load i18n %}
 <table class="table">
     <thead>
       <tr>
-        <th>Zawód</th>
-        <th>Średnia wieku</th>
+        <th>{% translate "Zawód" %}</th>
+        <th>{% translate "Średnia wieku" %}</th>
       </tr>
     </thead>
     <tbody>
@@ -23,7 +23,7 @@
 
 
 <form action="{% url 'report' %}">
-    <button type="submit">Wygeneruj raport w formacie CSV</button>
+    <button type="submit">{% translate "Wygeneruj raport w formacie CSV" %}</button>
  </form>
 
 {% endblock %}

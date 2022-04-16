@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+{% load i18n %}
 
 {{message}}
 <br>
-Błąd 400
+{% translate "Błąd 400" %}
 {% endblock %}
 

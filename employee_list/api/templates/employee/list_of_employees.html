@@ -2,7 +2,7 @@
 
 {% block content %}
 {% load i18n %}
-<a href="{% url 'url_for_report' %}">Raport nt. średniej wieku wg zawodów</a>
+<a href="{% url 'url_for_report' %}">{% translate "Raport nt. średniej wieku wg zawodów" %}</a>
 <br>
 <p>{% translate "Lista pracowników"  %}</p>
 
@@ -14,11 +14,11 @@
     <br>
     {{employee.profession.name}}
     <br>
-    <a href="{% url 'details' employee.pk %}">Dane pracownika</a>
+    <a href="{% url 'details' employee.pk %}">{% translate "Dane pracownika" %}</a>
     <br>
     <a href="{% url 'delete_employee_ajax' employee.id %}" class="link-delete text-danger">Usuń pracownika</a>
     {% empty %}
-    <p>Brak pracowników w bazie.</p>
+    <p>{% translate "Brak pracowników w bazie." %}</p>
 {% endfor %}
 </ol>
 
@@ -40,7 +40,7 @@
     </span>
 </div>
 
-<a href="{% url 'create' %}">Dodaj pracownika</a>
+<a href="{% url 'create' %}">{% translate "Dodaj pracownika" %}</a>
 
 <script > 
 $(".link-delete").on("click", function(e){

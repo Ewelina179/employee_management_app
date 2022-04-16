@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<p> Dane pracownika </p>
+{% load i18n %}
+<p>{% translate "Dane pracownika" %}</p>
 
 <ol>
     <li>{{employee.first_name}}</li>
@@ -10,9 +11,9 @@
     <li>{{employee.profession}}</li>
     <img src="{{ employee.avatar.url}}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
     <br>
-    <a href="{% url 'update' employee.pk %}">Edytuj dane</a>
+    <a href="{% url 'update' employee.pk %}">{% translate "Edytuj dane" %}</a>
     <form action="{% url 'delete' employee.pk %}">
-        <button type="submit">Usuń pracownika</button>
+        <button type="submit">{% translate "Usuń pracownika" %}</button>
      </form>    
 
 </ol>
