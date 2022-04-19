@@ -16,7 +16,7 @@
     <br>
     <a href="{% url 'details' employee.pk %}">{% translate "Dane pracownika" %}</a>
     <br>
-    <a href="{% url 'delete_employee_ajax' employee.id %}" class="link-delete text-danger">Usuń pracownika</a>
+    <a href="{% url 'delete_employee_ajax' employee.id %}" class="link-delete text-danger">{% translate "Usuń pracownika" %}</a>
     {% empty %}
     <p>{% translate "Brak pracowników w bazie." %}</p>
 {% endfor %}
