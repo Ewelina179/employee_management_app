@@ -32,8 +32,9 @@
 </form>
 
 
-
-{% translate "Cześć, {{ user.username|default:'Niezalogowany użytkowniku' }}!" %}
+{% blocktranslate with myvar=user.username|default:'Niezalogowany użytkowniku' %}
+Cześć, {{myvar}}!
+{% endblocktranslate%}
 
 <div>
     {% if user.is_authenticated %}
