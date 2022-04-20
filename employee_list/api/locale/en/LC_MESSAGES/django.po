@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-20 14:38+0200\n"
+"POT-Creation-Date: 2022-04-20 14:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,6 +55,10 @@ msgstr "List of employees"
 msgid "Lista zawodów"
 msgstr "List of professions"
 
+#: api/templates/base.html:33
+msgid "Przełącz"
+msgstr "Go"
+
 #: api/templates/base.html:37
 #, python-format
 msgid ""
@@ -71,6 +75,10 @@ msgstr "Log out"
 #: api/templates/base.html:45 api/templates/registration/login.html:5
 msgid "Zaloguj"
 msgstr "Log in"
+
+#: api/templates/employee/employee_create_form.html:9
+msgid "Zatwierdź"
+msgstr "Submit"
 
 #: api/templates/employee/employee_delete.html:9
 msgid "Czy jesteś pewien, że chcesz usunąć pracownika?"
