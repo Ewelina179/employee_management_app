@@ -1,26 +1,26 @@
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
-
+from django.utils.translation import gettext_lazy as _
 from employees.models import Employee, Profession
 
 
 class EmployeeForm(ModelForm):
 
     first_name = forms.CharField(
-        label="Imię",
+        label=_("Imię"),
         widget=forms.Textarea(attrs={"rows": 1, "cols": 10})
         )
     last_name = forms.CharField(
-        label="Nazwisko",
+        label=_("Nazwisko"),
         widget=forms.Textarea(attrs={"rows": 1, "cols": 10})
         )
     age = forms.IntegerField(
-        label="Wiek"
+        label=_("Wiek")
     )
     profession = forms.ModelChoiceField(
         queryset=Profession.objects.all(),
-        label='Wybierz zawód z podanych',
+        label=_('Wybierz zawód z podanych'),
         widget=forms.Select
     )
 

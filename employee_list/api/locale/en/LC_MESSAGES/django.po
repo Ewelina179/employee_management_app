@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-19 16:03+0200\n"
+"POT-Creation-Date: 2022-04-20 12:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: api/forms.py:11
+msgid "Imię"
+msgstr "First name"
+
+#: api/forms.py:15
+msgid "Nazwisko"
+msgstr "Last name"
+
+#: api/forms.py:19
+msgid "Wiek"
+msgstr "Age"
+
+#: api/forms.py:23
+msgid "Wybierz zawód z podanych"
+msgstr "Choose a profession"
 
 #: api/templates/400.html:8
 msgid "Błąd 400"
@@ -30,16 +46,16 @@ msgstr "Page not found"
 msgid "Błąd 500"
 msgstr "500 Error"
 
-#: api/templates/base.html:14 api/templates/employee/list_of_employees.html:7
+#: api/templates/base.html:16 api/templates/employee/list_of_employees.html:14
 msgid "Lista pracowników"
 msgstr "List of employees"
 
-#: api/templates/base.html:15
+#: api/templates/base.html:17
 #: api/templates/profession/list_of_professions.html:5
 msgid "Lista zawodów"
 msgstr "List of professions"
 
-#: api/templates/base.html:35
+#: api/templates/base.html:37
 #, python-format
 msgid ""
 "\n"
@@ -48,11 +64,11 @@ msgstr ""
 "\n"
 "Hello, %(myvar)s\n"
 
-#: api/templates/base.html:41
+#: api/templates/base.html:43
 msgid "Wylogouj"
 msgstr "Log out"
 
-#: api/templates/base.html:43 api/templates/registration/login.html:5
+#: api/templates/base.html:45 api/templates/registration/login.html:5
 msgid "Zaloguj"
 msgstr "Log in"
 
@@ -61,7 +77,7 @@ msgid "Czy jesteś pewien, że chcesz usunąć pracownika?"
 msgstr "Are you sure you want to delete profession?"
 
 #: api/templates/employee/employee_detail.html:5
-#: api/templates/employee/list_of_employees.html:17
+#: api/templates/employee/list_of_employees.html:24
 msgid "Dane pracownika"
 msgstr "Employee details"
 
@@ -71,19 +87,19 @@ msgid "Edytuj dane"
 msgstr "Edit"
 
 #: api/templates/employee/employee_detail.html:16
-#: api/templates/employee/list_of_employees.html:19
+#: api/templates/employee/list_of_employees.html:26
 msgid "Usuń pracownika"
 msgstr "Delete employee"
 
-#: api/templates/employee/list_of_employees.html:5
+#: api/templates/employee/list_of_employees.html:12
 msgid "Raport nt. średniej wieku wg zawodów"
 msgstr "Report - average age of each profession"
 
-#: api/templates/employee/list_of_employees.html:21
+#: api/templates/employee/list_of_employees.html:28
 msgid "Brak pracowników w bazie."
 msgstr "There are no employees"
 
-#: api/templates/employee/list_of_employees.html:43
+#: api/templates/employee/list_of_employees.html:50
 msgid "Dodaj pracownika"
 msgstr "Add employee"
 
