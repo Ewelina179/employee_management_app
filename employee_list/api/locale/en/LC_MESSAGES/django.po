@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-20 12:46+0200\n"
+"POT-Creation-Date: 2022-04-20 14:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -99,7 +99,30 @@ msgstr "Report - average age of each profession"
 msgid "Brak pracowników w bazie."
 msgstr "There are no employees"
 
-#: api/templates/employee/list_of_employees.html:50
+#: api/templates/employee/list_of_employees.html:36
+msgid "poprzedni"
+msgstr "previous"
+
+#: api/templates/employee/list_of_employees.html:40
+#, python-format
+msgid ""
+"\n"
+"            Strona %(myvar)s z %(myvar2)s.\n"
+"            "
+msgstr ""
+"\n"
+"            Page %(myvar)s of %(myvar2)s.\n"
+"            "
+
+#: api/templates/employee/list_of_employees.html:46
+msgid "następny"
+msgstr "next"
+
+#: api/templates/employee/list_of_employees.html:47
+msgid "ostatni"
+msgstr "last"
+
+#: api/templates/employee/list_of_employees.html:52
 msgid "Dodaj pracownika"
 msgstr "Add employee"
 

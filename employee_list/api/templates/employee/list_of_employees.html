@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% load static %}
 {% load i18n %}
+<head>
+    <!-- Load translations into Javascript -->
+    <script src="{% url 'javascript-catalog' %}"></script>
+    <!-- Load our JS script that uses translations -->
+    <script src="{% static 'django_i18n_example/index.js' %}"></script>
+</head>
 <a href="{% url 'url_for_report' %}">{% translate "Raport nt. średniej wieku wg zawodów" %}</a>
 <br>
 <p>{% translate "Lista pracowników"  %}</p>
@@ -26,27 +33,29 @@
     <span class="step-links">
         {% if page_obj.has_previous %}
             <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            <a href="?page={{ page_obj.previous_page_number }}">{% translate "poprzedni" %}</a>
         {% endif %}
 
         <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            {% blocktranslate with myvar=page_obj.number myvar2=page_obj.paginator.num_pages %}
+            Strona {{myvar}} z {{myvar2}}.
+            {% endblocktranslate%}
         </span>
 
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            <a href="?page={{ page_obj.next_page_number }}">{% translate "następny" %}</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">{% translate "ostatni" %} &raquo;</a>
         {% endif %}
     </span>
 </div>
 
 <a href="{% url 'create' %}">{% translate "Dodaj pracownika" %}</a>
-
-<script > 
+<script >
 $(".link-delete").on("click", function(e){
     e.preventDefault();
     var $this = $(this);
-    if (confirm("Czy chcesz usunąć pracownika?")){
+    const simpleString = gettext('Czy chcesz usunąć pracownika');
+    if (confirm(simpleString)){
         $.ajax({
             url: $this.attr("href"),
             type: "GET",
@@ -71,9 +80,8 @@ $(".link-delete").on("click", function(e){
     return false;
 }
 )
+
 </script>
-
-
 
 
 {% endblock %}
