@@ -12,6 +12,7 @@ from api.views import (CreateEmployeeView, CreateProfessionView,
 
 
 from rest_framework import routers
+from django.views.i18n import JavaScriptCatalog
 
 from .views import EmployeeViewset, ProfessionViewSet
 
@@ -37,6 +38,7 @@ urlpatterns = [
     path('profession/create', CreateProfessionView.as_view(), name='create_profession'),
     path('profession/<pk>/edit/', UpdateProfessionView.as_view(), name='update_profession'),
     path('profession/<pk>/delete/', DeleteProfessionView.as_view(), name='delete_profession'),
-    path('getreport/', GetReportView.as_view(), name='getreport' )
+    path('getreport/', GetReportView.as_view(), name='getreport' ),
+    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ]
 urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)
