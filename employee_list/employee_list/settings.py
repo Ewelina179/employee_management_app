@@ -101,9 +101,6 @@ REST_FRAMEWORK = {
         ]
 }
 
-REST_FRAMEWORK = {'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework_csv.renderers.CSVRenderer',
-    )}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
